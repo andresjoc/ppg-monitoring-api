@@ -16,6 +16,14 @@ Este repositorio corresponde al microservicio CRUD de almacenamiento del sistema
 
 Este servicio no autentica usuarios ni valida contrasenas. La autenticacion ocurre en `ms-auth`, que emite un JWT. Luego este servicio valida ese JWT localmente para autorizar acceso a recursos protegidos.
 
+La ubicacion geografica sigue la jerarquia:
+
+- `country`
+- `region`
+- `city`
+
+`APP_USER` persiste solo `id_city`; la region y el pais se obtienen por relacion.
+
 ---
 
 ## Modelo de datos actualizado
@@ -35,7 +43,7 @@ Para usuarios, este servicio solo maneja:
 - `first_name`
 - `last_name`
 - `birth_date`
-- `id_city`
+- `id_city` (opcional al registrarse; se puede completar despues)
 
 ### Que no usa este servicio
 
@@ -390,6 +398,7 @@ ppg-monitoring-api/
 Actualmente siguen publicos los modulos no protegidos por este cambio:
 
 - `/countries`
+- `/regions`
 - `/cities`
 - `/wearable-models`
 - `/metric-types`
@@ -415,7 +424,7 @@ Actualmente siguen publicos los modulos no protegidos por este cambio:
 - `POST /App_users`: ya no crea usuarios; responde que el registro se hace en `ms-auth`
 - `GET /App_users`: devuelve solo el usuario autenticado
 - `GET /App_users/{id_user}`: solo permite consultar el propio usuario
-- `PUT /App_users/{id_user}`: solo permite actualizar el propio perfil
+- `PUT /App_users/{id_user}`: solo permite actualizar el propio perfil y puede completar `id_city`
 - `DELETE /App_users/{id_user}`: solo permite eliminar el propio perfil
 
 ### Registros de salud

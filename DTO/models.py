@@ -11,22 +11,33 @@ class Country(Base):
     name = Column(String(100), nullable=False)
 
 
+class Region(Base):
+    __tablename__ = "region"
+
+    id_region = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id_country = Column(Integer, ForeignKey("country.id_country"), nullable=False)
+    name = Column(String(100), nullable=False)
+
+    country = relationship("Country")
+    cities = relationship("City", back_populates="region")
+
+
 class City(Base):
     __tablename__ = "city"
 
     id_city = Column(Integer, primary_key=True, index=True)
-    id_country = Column(Integer, ForeignKey("country.id_country"), nullable=False)
+    id_region = Column(Integer, ForeignKey("region.id_region"), nullable=False)
     name = Column(String(100), nullable=False)
 
     users = relationship("App_user", back_populates="city")
-    id_country = Column(Integer, ForeignKey("country.id_country"), nullable=False)
+    region = relationship("Region", back_populates="cities")
 
 
 class App_user(Base):
     __tablename__ = "app_user"
 
     id_user = Column(Integer, primary_key=True, index=True)
-    id_city = Column(Integer, ForeignKey("city.id_city"), nullable=False)
+    id_city = Column(Integer, ForeignKey("city.id_city"), nullable=True)
 
     email = Column(String(50), unique=True, nullable=False, index=True)
 

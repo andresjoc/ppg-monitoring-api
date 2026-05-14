@@ -1,11 +1,12 @@
 from pydantic import BaseModel, EmailStr
 from decimal import Decimal
 from datetime import date, datetime
-from typing import List, Optional
+from typing import Optional
 
 
 class CountryCreate(BaseModel):
     name: str
+
 
 class CountryResponse(BaseModel):
     id_country: int
@@ -15,13 +16,13 @@ class CountryResponse(BaseModel):
         from_attributes = True
 
 
-
-class CityCreate(BaseModel):
+class RegionCreate(BaseModel):
     name: str
     id_country: int
 
-class CityResponse(BaseModel):
-    id_city: int
+
+class RegionResponse(BaseModel):
+    id_region: int
     name: str
     id_country: int
 
@@ -29,6 +30,18 @@ class CityResponse(BaseModel):
         from_attributes = True
 
 
+class CityCreate(BaseModel):
+    name: str
+    id_region: int
+
+
+class CityResponse(BaseModel):
+    id_city: int
+    name: str
+    id_region: int
+
+    class Config:
+        from_attributes = True
 
 
 class AppUserCreate(BaseModel):
@@ -41,14 +54,13 @@ class AppUserCreate(BaseModel):
 
 class AppUserResponse(BaseModel):
     id_user: int
-    id_city: int
+    id_city: Optional[int] = None
     email: EmailStr
     first_name: str
     last_name: str
     birth_date: date
     created_at: datetime
     updated_at: datetime
-    
 
     class Config:
         from_attributes = True
@@ -70,7 +82,6 @@ class HealthRecordResponse(BaseModel):
         from_attributes = True
 
 
-
 class WearableModelCreate(BaseModel):
     brand: str
     model: str
@@ -83,6 +94,7 @@ class WearableModelResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
 
 class WearableCreate(BaseModel):
     id_wearable_model: int
@@ -203,7 +215,6 @@ class ComputeStatusResponse(BaseModel):
 
     class Config:
         from_attributes = True
-
 
 
 class PpgSampleCreate(BaseModel):
