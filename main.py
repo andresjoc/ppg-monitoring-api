@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from routes import country
+from routes import region
 from routes import city
 from routes import app_user
 from routes import health_record
@@ -20,6 +21,7 @@ app.include_router(app_user.router)
 app.include_router(city.router)
 app.include_router(compute_status.router)
 app.include_router(country.router)
+app.include_router(region.router)
 app.include_router(health_record.router)
 app.include_router(measurement.router)
 app.include_router(metric_type.router)
